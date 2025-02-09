@@ -213,7 +213,49 @@ try {
 ![alt text](image-3.png)
 
 
-6.
+6. se modifico el metodo fight de `Immortals` 
+
+``` java 
+    public void fight(Immortal i2) {
+
+        synchronized (immortalsPopulation) {
+            if (i2.getHealth() > 0) {
+                if (i2.getHealth() != 0) {
+                    i2.changeHealth(i2.getHealth() - defaultDamageValue);
+                    this.health += defaultDamageValue;
+                }
+                updateCallback.processReport("Fight: " + this + " vs " + i2 + "\n");
+            } else {
+                updateCallback.processReport(this + " says:" + i2 + " is already dead!\n");
+                immortalsPopulation.remove(i2);
+                i2.pause();
+            }
+        }
+    }
+```
+
+7. no se pauso 
+
+
+8. no se realizo una estrategia pues no se tuvo que corregir ningun problema 
+
+
+9. 
+    para `100`
+    
+    ![alt text](image-4.png)
+
+    para `1000`
+
+    ![alt text](image-5.png)
+
+    para `10000`
+
+    ![alt text](image-6.png)
+
+10. 
+
+
 
     
 
