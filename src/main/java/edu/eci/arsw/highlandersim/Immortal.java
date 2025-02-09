@@ -5,10 +5,10 @@ import java.util.Random;
 
 public class Immortal extends Thread {
 
-    private ImmortalUpdateReportCallback updateCallback=null;
-    
+    private ImmortalUpdateReportCallback updateCallback = null;
+
     private int health;
-    
+
     private int defaultDamageValue;
 
     private final List<Immortal> immortalsPopulation;
@@ -17,19 +17,31 @@ public class Immortal extends Thread {
 
     private final Random r = new Random(System.currentTimeMillis());
 
+    private boolean pause = false;
 
     public Immortal(String name, List<Immortal> immortalsPopulation, int health, int defaultDamageValue, ImmortalUpdateReportCallback ucb) {
         super(name);
-        this.updateCallback=ucb;
+        this.updateCallback = ucb;
         this.name = name;
         this.immortalsPopulation = immortalsPopulation;
         this.health = health;
-        this.defaultDamageValue=defaultDamageValue;
+        this.defaultDamageValue = defaultDamageValue;
     }
 
     public void run() {
 
         while (true) {
+
+            synchronized (this) {
+                while (pause) {
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
             Immortal im;
 
             int myIndex = immortalsPopulation.indexOf(this);
@@ -60,7 +72,7 @@ public class Immortal extends Thread {
         if (i2.getHealth() > 0) {
             i2.changeHealth(i2.getHealth() - defaultDamageValue);
             this.health += defaultDamageValue;
-            updateCallback.processReport("Fight: " + this + " vs " + i2+"\n");
+            updateCallback.processReport("Fight: " + this + " vs " + i2 + "\n");
         } else {
             updateCallback.processReport(this + " says:" + i2 + " is already dead!\n");
         }
@@ -79,6 +91,15 @@ public class Immortal extends Thread {
     public String toString() {
 
         return name + "[" + health + "]";
+    }
+
+    public synchronized void pause() {
+        this.pause = true;
+    }
+
+    public synchronized void resumeThread() {
+        this.pause = false;
+        notify();
     }
 
 }
