@@ -81,3 +81,6 @@ public void run() {
     }
 ```
 
+realizando estos cambios este es el nuevo consumo que tiene la CPU 
+
+![alt text](image-1.png)
