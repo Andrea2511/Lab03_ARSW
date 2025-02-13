@@ -253,8 +253,9 @@ try {
 
     ![alt text](img/image-6.png)
 
-#### 10. Múltiples hilos intentan modificar la lista compartida simultáneamente junto a esto los immortales que ya han muerto puden causar errores en la ejecucion del programa por lo cualuna de las soluciones es remover al immortal cuando este ya este muerto
+#### 10. Múltiples hilos intentan modificar la lista compartida simultáneamente junto a esto los immortales que ya han muerto puden causar errores en la ejecucion del programa por lo cualuna de las soluciones es remover al immortal cuando este ya este muerto 
 
+Este mismo trabajo se encuentra en [RESPUESTAS.TXT](RESPUESTAS.txt)
     
 ```java
 updateCallback.processReport(this + " says:" + i2 + " is already dead!\n");
