@@ -8,7 +8,7 @@
 
 
 
-![alt text](image.png)
+![alt text](img/image.png)
 
 el consumo se debe a la ejecucion permanente de un hilo que añade un numero a una queue esto se ejecuta en la clase `Producer` pues esta tiene un bucle infinito sin control
 
@@ -83,7 +83,7 @@ public void run() {
 
 realizando estos cambios este es el nuevo consumo que tiene la CPU 
 
-![alt text](image-1.png)
+![alt text](img/image-1.png)
 
 
 para hacer que producer produzca mas rapido lo que hacemos es disminuir el tiempo en el try 
@@ -110,16 +110,16 @@ try {
 
 ## parte III
 
-2.  para este caso el valor deberia ser  
+#### 2.  para este caso el valor deberia ser  
 
     `Healthsum = N * DEFAULT_IMMORTAL_HEALTH`
 
-3.  La invariante no se cumple pues `DEFAULT_IMMORTAL_HEALTH = 100 ` y `N = 3`
+#### 3.  La invariante no se cumple pues `DEFAULT_IMMORTAL_HEALTH = 100 ` y `N = 3`
     por lo que `Healthsum` deberia ser  `3 * 100 = 300` 
 
-    ![alt text](image-2.png) 
+    ![alt text](img/image-2.png) 
 
-4. primero completamos la funcion `"pause and check"` y la funcion `"resume"` para poder completar esto necesitamos primero crear methodos nuevos dentro de `Immortal` para la detencion y reanudacion de los hilos
+#### 4. primero completamos la funcion `"pause and check"` y la funcion `"resume"` para poder completar esto necesitamos primero crear methodos nuevos dentro de `Immortal` para la detencion y reanudacion de los hilos
 
     ```java
     public synchronized void pause() {
@@ -209,11 +209,11 @@ try {
     ```
 
 
-5. aun no se cumple la invariante 
-![alt text](image-3.png)
+#### 5. aun no se cumple la invariante 
+![alt text](img/image-3.png)
 
 
-6. se modifico el metodo fight de `Immortals` 
+####  6. se modifico el metodo fight de `Immortals` 
 
 ``` java 
     public void fight(Immortal i2) {
@@ -243,19 +243,38 @@ try {
 9. 
     para `100`
     
-    ![alt text](image-4.png)
+    ![alt text](img/image-4.png)
 
     para `1000`
 
-    ![alt text](image-5.png)
+    ![alt text](img/image-5.png)
 
     para `10000`
 
-    ![alt text](image-6.png)
+    ![alt text](img/image-6.png)
 
-10. 
-
-
+#### 10. Múltiples hilos intentan modificar la lista compartida simultáneamente junto a esto los immortales que ya han muerto puden causar errores en la ejecucion del programa por lo cualuna de las soluciones es remover al immortal cuando este ya este muerto
 
     
+```java
+updateCallback.processReport(this + " says:" + i2 + " is already dead!\n");
+                immortalsPopulation.remove(i2);
+                i2.pause();
+```
 
+
+#### 11.  se implemento el boton `STOP` que al parar se vuelve a activar el boton `Start`
+
+```java
+        JButton btnStop = new JButton("STOP");
+        btnStop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                for (Immortal im : immortals) {
+                    im.pause();
+                }
+                btnStart.setEnabled(true);
+            }
+        });
+        btnStop.setForeground(Color.RED);
+        toolBar.add(btnStop);
+```
